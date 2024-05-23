@@ -14,10 +14,7 @@ class Weapon:
         self.sub_stat: str = ""
         self.sub_stat_val: float = 0
         self.release_date: str = ""
-
         self.sort_order: int = -1
-        self.refinement: int = 0
-        self.level: int = 0
         pass
 
     def get_name(self) -> str:
@@ -80,31 +77,5 @@ class Weapon:
     def set_sort_order(self, sort_order: int) -> None:
         self.sort_order = sort_order
         return None
-
-    def get_refinement(self) -> int:
-        return self.refinement
-
-    def set_refinement(self, refinement: int) -> None:
-        self.refinement = refinement
-        return None
-
-    def get_level(self) -> int:
-        return self.level
-
-    def set_level(self, level: int) -> None:
-        self.level = level
-        return None
-
-    def get_weapon_details(self) -> str:
-        details: str = (
-            f"Name: {self.name}\n"
-            f"\tStars: {self.quality}\n"
-            f"\tType: {self.weapon_type}\n"
-            f"\tBase ATK (Lv 90): {self.base_atk}\n"
-            f"\tSub Stat: {self.sub_stat}\n"
-            f"\tSub Stat Value: {self.sub_stat_val}\n"
-            f"\tRelease Date: {self.release_date}\n"
-        )
-        return details
 
     pass

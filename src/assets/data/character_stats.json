@@ -1,0 +1,65 @@
+{
+  "level_multipliers": {
+  },
+  "bonus_attribute": {
+    "HP": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "ATK": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "DEF": {
+      "4": 0.075
+    },
+    "Energy Recharge": {
+      "4": 0.067,
+      "5": 0.08
+    },
+    "Healing Bonus": {
+      "5": 0.055
+    },
+    "CRIT Rate": {
+      "5": 0.048
+    },
+    "CRIT DMG": {
+      "5": 0.096
+    },
+    "Anemo DMG Bonus": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "Geo DMG Bonus": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "Electro DMG Bonus": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "Dendro DMG Bonus": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "Hydro DMG Bonus": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "Pyro DMG Bonus": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "Cryo DMG Bonus": {
+      "4": 0.06,
+      "5": 0.072
+    },
+    "Physical DMG Bonus": {
+      "4": 0.075
+    },
+    "Elemental Mastery": {
+      "4": 24,
+      "5": 28.8
+    }
+  }
+}

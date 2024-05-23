@@ -1,0 +1,11 @@
+{
+  "Main": "https://genshin-impact.fandom.com",
+  "Characters": "https://genshin-impact.fandom.com/wiki/Character/List",
+  "Weapons": {
+    "Swords": "https://genshin-impact.fandom.com/wiki/Sword",
+    "Claymore": "https://genshin-impact.fandom.com/wiki/Claymore",
+    "Polearm": "https://genshin-impact.fandom.com/wiki/Polearm",
+    "Catalyst": "https://genshin-impact.fandom.com/wiki/Catalysts",
+    "Bow": "https://genshin-impact.fandom.com/wiki/Bow"
+  }
+}

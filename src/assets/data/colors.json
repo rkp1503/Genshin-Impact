@@ -1,0 +1,43 @@
+{
+  "Grades": {
+    "S+": "#d30505",
+    "S": "#00fbfb",
+    "A": "#ffd900",
+    "B": "#ffa500",
+    "C": "#af5ee5",
+    "D": "#629df5",
+    "F": "#787878"
+  },
+  "Quality": {
+    "5": "#C78853",
+    "4": "#8B73B4",
+    "3": "#C24F54"
+  },
+  "Vision": {
+    "Anemo": "#33CCB3",
+    "Geo": "#CFA726",
+    "Electro": "#CC72E8",
+    "Dendro": "#7BB42D",
+    "Hydro": "#1C72FD",
+    "Pyro": "#E0311D",
+    "Cryo": "#98C8E8"
+  },
+  "Nation": {
+    "Mondstadt": "#33CCB3",
+    "Liyue": "#CFA726",
+    "Inazuma": "#CC72E8",
+    "Sumeru": "#7BB42D",
+    "Fontaine": "#1C72FD",
+    "Natlan": "#E0311D",
+    "Snezhnaya": "#98C8E8"
+  },
+  "DMG Bonus": {
+    "Anemo DMG Bonus": "#33CCB3",
+    "Geo DMG Bonus": "#CFA726",
+    "Electro DMG Bonus": "#CC72E8",
+    "Dendro DMG Bonus": "#7BB42D",
+    "Hydro DMG Bonus": "#1C72FD",
+    "Pyro DMG Bonus": "#E0311D",
+    "Cryo DMG Bonus": "#98C8E8"
+  }
+}

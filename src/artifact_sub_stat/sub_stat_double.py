@@ -10,23 +10,29 @@ import sub_stat_helper as ssh
 
 
 def get_all_possible_rolls(json_data: dict, sub_stats: list[str],
-                           num_rolls: int = 5) -> list[list[float]]:
+                           num_rolls: int = 5) -> (
+        tuple)[list[list[float]], list[int]]:
     a_s, b_s = ssh.get_sub_stat_lists(json_data, sub_stats)
-    data: list[list[float]] = [
+    data_set: list[list[float]] = [
         [a, b] for a in a_s for b in b_s
         if (a > 0) and (b > 0)
     ]
+    data_counts: list[int] = [1 for _ in range(len(data_set))]
     for _ in range(num_rolls):
-        for vals in copy.deepcopy(data):
+        temp_data_set: list[list[float]] = copy.deepcopy(data_set)
+        temp_data_counts: list[int] = copy.deepcopy(data_counts)
+        for (roll, count) in zip(temp_data_set, temp_data_counts):
             for a in a_s:
-                data.append([vals[0] + a, vals[1]])
+                next_roll_a: list[float] = [roll[0] + a, roll[1]]
+                ssh.next_roll_helper(next_roll_a, count, data_set, data_counts)
                 pass
             for b in b_s:
-                data.append([vals[0], vals[1] + b])
+                next_roll_b: list[float] = [roll[0], roll[1] + b]
+                ssh.next_roll_helper(next_roll_b, count, data_set, data_counts)
                 pass
             pass
         pass
-    return data
+    return data_set, data_counts
 
 
 def evaluate_normalized_roll_value(nrv: float) -> str:
@@ -95,4 +101,16 @@ def compute_probabilities(json_data: dict, all_sub_stats: list[str],
             ssh.compute_probabilities(grade_counters, sub_stats)
             pass
         pass
+    return None
+
+
+def main(json_data: dict, sub_stats: list[str], normalize: bool) -> None:
+    data_set, data_counts = get_all_possible_rolls(json_data, sub_stats)
+    rv_lst: list[float] = ssh.convert_data_to_roll_value(json_data, sub_stats,
+                                                         data_set,
+                                                         normalize=normalize)
+    data: list[float] = [
+        rv for (rv, i) in zip(rv_lst, data_counts) for _ in range(i)
+    ]
+    ssh.display_distribution(sub_stats, data, normalize=normalize, bw_adjust=2)
     return None

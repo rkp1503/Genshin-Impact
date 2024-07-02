@@ -10,20 +10,25 @@ import sub_stat_helper as ssh
 
 
 def get_all_possible_rolls(json_data: dict, sub_stats: list[str],
-                           num_rolls: int = 5) -> list[list[float]]:
+                           num_rolls: int = 5) -> tuple[
+    list[list[float]], list[int]]:
     a_s = ssh.get_sub_stat_lists(json_data, sub_stats)[0]
-    data: list[list[float]] = [
+    data_set: list[list[float]] = [
         [a] for a in a_s
         if (a > 0)
     ]
+    data_counts: list[int] = [1 for _ in range(len(data_set))]
     for _ in range(num_rolls):
-        for vals in copy.deepcopy(data):
+        temp_data_set: list[list[float]] = copy.deepcopy(data_set)
+        temp_data_counts: list[int] = copy.deepcopy(data_counts)
+        for (roll, count) in zip(temp_data_set, temp_data_counts):
             for a in a_s:
-                data.append([vals[0] + a])
+                next_roll_a: list[float] = [roll[0] + a]
+                ssh.next_roll_helper(next_roll_a, count, data_set, data_counts)
                 pass
             pass
         pass
-    return data
+    return data_set, data_counts
 
 
 def evaluate_normalized_roll_value(nrv: float) -> str:
@@ -88,4 +93,16 @@ def compute_probabilities(json_data: dict, all_sub_stats: list[str],
             pass
         ssh.compute_probabilities(grade_counters, sub_stats)
         pass
+    return None
+
+
+def main(json_data: dict, sub_stats: list[str], normalize: bool) -> None:
+    data_set, data_counts = get_all_possible_rolls(json_data, sub_stats)
+    rv_lst: list[float] = ssh.convert_data_to_roll_value(json_data, sub_stats,
+                                                         data_set,
+                                                         normalize=normalize)
+    data: list[float] = [
+        rv for (rv, i) in zip(rv_lst, data_counts) for _ in range(i)
+    ]
+    ssh.display_distribution(sub_stats, data, normalize=normalize, bw_adjust=1)
     return None

@@ -10,14 +10,14 @@ import seaborn as sns
 
 def get_sub_stat_lists(json_data: dict,
                        sub_stats: list[str]) -> list[list[float]]:
-    sub_stat_lsts = [
+    sub_stat_lsts: list[list[float]] = [
         list(json_data[sub_stat].values()) for sub_stat in sub_stats
     ]
-    for i in range(len(sub_stat_lsts)):
-        if len(sub_stats) < 4:
-            sub_stat_lsts[i].append(0)
+    if len(sub_stats) < 4:
+        for (i, sub_stat_lst) in enumerate(sub_stat_lsts):
+            sub_stat_lst.append(0)
+            sub_stat_lsts[i] = sorted(sub_stat_lst)
             pass
-        sub_stat_lsts[i] = sorted(sub_stat_lsts[i])
         pass
     return sub_stat_lsts
 
@@ -30,11 +30,9 @@ def convert_data_to_roll_value(json_data: dict, sub_stats: list[str],
     ]
     max_val: float = max(all_vals)
     multipliers: list[float] = [max_val / val for val in all_vals]
+    norm: float = 1.0
     if normalize:
         norm: float = 1 / max_val
-        pass
-    else:
-        norm: float = 1.0
         pass
     roll_values: list[float] = []
     for roll in data:
@@ -108,4 +106,17 @@ def compute_probabilities(grade_counters: dict[str, int],
             pass
         pass
     print(f"{'/'.join(sub_stats)}: {grade_probabilities}")
+    return None
+
+
+def next_roll_helper(next_roll: list[float], count: int,
+                     data_set: list[list[float]],
+                     data_counts: list[int]) -> None:
+    if next_roll not in data_set:
+        data_set.append(next_roll)
+        data_counts.append(count)
+        pass
+    else:
+        data_counts[data_set.index(next_roll)] += count
+        pass
     return None

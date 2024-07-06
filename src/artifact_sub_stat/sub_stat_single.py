@@ -45,8 +45,8 @@ def evaluate_normalized_roll_value(nrv: float) -> str:
 
 
 def analyze_sub_stats(json_data: dict, all_sub_stats: list[str],
-                      all_sub_stat_values: list[float], m: int) -> None:
-    print(f"Single Sub Stat Ratings:")
+                      all_sub_stat_values: list[float]) -> list[
+    tuple[str, str, float]]:
     results: list[tuple[str, str, float]] = []
     n: int = len(all_sub_stats)
     for i in range(0, n):
@@ -66,8 +66,7 @@ def analyze_sub_stats(json_data: dict, all_sub_stats: list[str],
         rating: str = evaluate_normalized_roll_value(nrv)
         results.append(("/".join(sub_stats), rating, nrv))
         pass
-    ssh.print_results(results, m)
-    return None
+    return results
 
 
 def compute_probabilities(json_data: dict, all_sub_stats: list[str],

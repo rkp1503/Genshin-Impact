@@ -8,16 +8,20 @@ import copy
 import math
 
 import artifact_sub_stat.sub_stat_double as ssd
-import artifact_sub_stat.sub_stat_quad as ssq
+import artifact_sub_stat.sub_stat_helper as ssh
 import artifact_sub_stat.sub_stat_single as sss
 import artifact_sub_stat.sub_stat_triple as sst
+import misc.table_functions as tf
 
-
-class ArtifactSet:
-    def __init__(self):
-        pass
-
-    pass
+FUNCS: list = [
+    sss, ssd, sst,
+    # ssq
+]
+COLUMNS: list[str] = [
+    "Single", "Double", "Triple",
+    # "Quad"
+]
+MAX_SUBSTATS: int = len(COLUMNS)
 
 
 class ArtifactPiece:
@@ -53,28 +57,49 @@ class ArtifactPiece:
               f"\tSub Stat 4: {self.sub_stat_4}+{self.sub_stat_4_value}")
         return None
 
+    def full_evaluation(self, json_data: dict) -> None:
+        sub_stats: list[str] = self.get_all_sub_stats()
+        sub_stat_vals: list[float] = self.get_all_sub_stat_values()
+        data_to_print: list = [
+            ["" for _ in range(MAX_SUBSTATS)] for _ in range(6)
+        ]
+        for (i, func) in enumerate(FUNCS):
+            res: list[tuple[str, str, float]] = func.analyze_sub_stats(
+                json_data, sub_stats, sub_stat_vals)
+            for (j, e) in enumerate(ssh.format_results(res, i + 1)):
+                data_to_print[j][i] = e
+                pass
+            pass
+        data_to_print.insert(0, [f"{col} Sub Stat" for col in COLUMNS])
+        tf.print_data_as_table(data_to_print)
+        return None
+
     def evaluate(self, json_data: dict, n: int = 0) -> None:
         sub_stats: list[str] = self.get_all_sub_stats()
         sub_stat_vals: list[float] = self.get_all_sub_stat_values()
-        if n == 0:
-            sss.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
-            ssd.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
-            sst.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
-            ssq.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
-            pass
-        elif n == 1:
-            sss.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
+        if n == 1:
+            print(f"Single Sub Stat Ratings:")
+            res: list[tuple[str, str, float]] = sss.analyze_sub_stats(
+                json_data, sub_stats, sub_stat_vals)
+            ssh.print_results(res, n)
             pass
         elif n == 2:
-            ssd.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
+            print(f"Double Sub Stat Ratings:")
+            res: list[tuple[str, str, float]] = ssd.analyze_sub_stats(
+                json_data, sub_stats, sub_stat_vals)
+            ssh.print_results(res, n)
             pass
         elif n == 3:
-            sst.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
-            pass
-        elif n == 4:
-            ssq.analyze_sub_stats(json_data, sub_stats, sub_stat_vals, n)
+            print(f"Triple Sub Stat Ratings:")
+            res: list[tuple[str, str, float]] = sst.analyze_sub_stats(
+                json_data, sub_stats, sub_stat_vals)
+            ssh.print_results(res, n)
             pass
         return None
+
+    def compute_full_probabilities(self) -> None:
+        return None
+
 
     def simulate_all_possible_rolls(self,
                                     json_data: dict) -> list[list[float]]:

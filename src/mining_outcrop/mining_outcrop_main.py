@@ -5,8 +5,8 @@ GitHub: https://github.com/rkp1503
 """
 
 import datetime
-import json
 import itertools
+import json
 import os
 import shutil
 
@@ -15,6 +15,11 @@ import openpyxl
 import mining_outcrop_helper as moh
 import misc.merge_sort as ms
 import misc.table_functions as tf
+
+NATIONS: list = [
+    "Mondstadt", "Liyue", "Inazuma", "Sumeru", "Fontaine",
+    # "Natlan", "Snezhnaya"
+]
 
 
 def get_json_data(path_to_file: str) -> dict:
@@ -68,11 +73,10 @@ def add_excel_data_to_json(path_to_excel_file: str,
     workbook = openpyxl.load_workbook(path_to_copied_excel_file)
 
     nations: list = [
-        "Mondstadt",
-        "Liyue", "Inazuma", "Sumeru", "Fontaine",
+        "Mondstadt", "Liyue", "Inazuma", "Sumeru", "Fontaine",
         # "Natlan", "Snezhnaya"
     ]
-    for nation in nations:
+    for nation in NATIONS:
         moh.add_excel_data_to_json_helper(prev_date, workbook, nation,
                                           json_data)
         pass
@@ -179,7 +183,8 @@ def npc_analysis(nation: str, json_data: dict) -> None:
     for (npc, data) in npc_data.items():
         for (i, lst) in enumerate(data):
             if isinstance(lst, list):
-                data[i] = f"({', '.join(lst)})"
+                lst: list = [str(e) for e in sorted([int(e) for e in lst])]
+                data[i] = f"{{{','.join(lst)}}}"
                 pass
             else:
                 data[i] = lst
@@ -192,12 +197,14 @@ def npc_analysis(nation: str, json_data: dict) -> None:
 
 def print_full_analysis(nation: str, json_data: dict,
                         sort: str | None = None) -> None:
-    moh.print_header(f"{nation} Full Analysis")
-    print(f"Size of data: {moh.get_num_of_entries(nation, json_data)}")
-    print()
-    ley_line_occurrences_analysis(nation, json_data, sort=sort)
-    print()
-    ley_line_mining_locations_probabilities(nation, json_data)
-    print()
-    npc_analysis(nation, json_data)
+    if nation in NATIONS:
+        moh.print_header(f"{nation} Full Analysis")
+        print(f"Size of data: {moh.get_num_of_entries(nation, json_data)}")
+        print()
+        ley_line_occurrences_analysis(nation, json_data, sort=sort)
+        print()
+        ley_line_mining_locations_probabilities(nation, json_data)
+        print()
+        npc_analysis(nation, json_data)
+        pass
     return None

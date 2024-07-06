@@ -79,11 +79,19 @@ def evaluate_normalized_roll_value(nrv: float,
     pass
 
 
-def print_results(results: list[tuple[str, str, float]], n: int) -> None:
+def format_results(results: list[tuple[str, str, float]], n: int) -> list[str]:
+    res_fmt: list[str] = []
     for result in sorted(results, key=lambda x: x[2], reverse=True):
         sub_stat, rating, nrv = result
         p: float = round(100 * nrv / (5 + n), 2)
-        print(f"\t{sub_stat}: {rating} ({p}%)")
+        res_fmt.append(f"{sub_stat}: {rating} ({p}%)")
+        pass
+    return res_fmt
+
+
+def print_results(results: list[tuple[str, str, float]], n: int) -> None:
+    for res in format_results(results, n):
+        print(f"\t{res}")
         pass
     return None
 
@@ -105,7 +113,7 @@ def compute_probabilities(grade_counters: dict[str, int],
             grade_probabilities[grade] = f"{p}%"
             pass
         pass
-    print(f"{'/'.join(sub_stats)}: {grade_probabilities}")
+    print(f"\t{'/'.join(sub_stats)}: {grade_probabilities}")
     return None
 
 

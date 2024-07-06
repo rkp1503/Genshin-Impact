@@ -42,7 +42,11 @@ def get_num_npc(nation: str) -> int:
 
 def row_to_dict(nation: str, row) -> dict:
     buffer: int = 0
-    if nation == "Liyue":
+    nations: list = [
+        "Liyue",
+        "Natlan", "Snezhnaya"
+    ]
+    if nation in nations:
         buffer = 1
         pass
     row_as_dict: dict = {

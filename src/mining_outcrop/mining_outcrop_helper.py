@@ -41,25 +41,17 @@ def get_num_npc(nation: str) -> int:
 
 
 def row_to_dict(nation: str, row) -> dict:
-    buffer: int = 0
-    nations: list = [
-        "Liyue",
-        "Natlan", "Snezhnaya"
-    ]
-    if nation in nations:
-        buffer = 1
-        pass
     row_as_dict: dict = {
         "day": row[0].value,
-        "wealth": row[1 + buffer].value,
-        "revelation": row[2 + buffer].value,
-        "unmarked": convert_data(row[3 + buffer].value),
-        "blacksmith": convert_data(row[4 + buffer].value),
+        "wealth": row[2].value,
+        "revelation": row[3].value,
+        "unmarked": convert_data(row[4].value),
+        "blacksmith": convert_data(row[5].value),
     }
     num_npc: int = get_num_npc(nation)
     for i in range(num_npc):
         npc: str = f"npc_{chr(ord('`') + i + 1)}"
-        row_as_dict[npc] = convert_data(row[5 + i + buffer].value)
+        row_as_dict[npc] = convert_data(row[6 + i].value)
         pass
     return row_as_dict
 
@@ -77,14 +69,16 @@ def add_excel_data_to_json_helper(prev_date: datetime.datetime,
         if prev_date > row_as_dict["day"]:
             continue
             pass
-        ley_line: str = f"{row_as_dict['wealth']} | {row_as_dict['revelation']}"
-        if ley_line not in json_data[nation]["data"]:
-            json_data[nation]["data"][ley_line] = []
+        if row[1].value is None:
+            ley_line: str = f"{row_as_dict['wealth']} | {row_as_dict['revelation']}"
+            if ley_line not in json_data[nation]["data"]:
+                json_data[nation]["data"][ley_line] = []
+                pass
+            row_as_dict.pop("day")
+            row_as_dict.pop("wealth")
+            row_as_dict.pop("revelation")
+            json_data[nation]["data"][ley_line].append(row_as_dict)
             pass
-        row_as_dict.pop("day")
-        row_as_dict.pop("wealth")
-        row_as_dict.pop("revelation")
-        json_data[nation]["data"][ley_line].append(row_as_dict)
         pass
     return None
 

@@ -5,10 +5,6 @@ GitHub: https://github.com/rkp1503
 """
 
 
-def sort_table(order: str = "asc") -> None:
-    return None
-
-
 def get_table_widths(data: list) -> list:
     widths = [0 for _ in range(len(data[0]))]
     for lst in data:
@@ -70,10 +66,14 @@ def print_data(data: list, widths: list) -> None:
     return None
 
 
-def print_data_as_table(data: list) -> None:
-    widths: list = get_table_widths(data)
-    header: list = data.pop(0)
-    print_header(header, widths)
-    print_separator(widths)
-    print_data(data, widths)
+def print_data_as_table(data: list, header: str = "row") -> None:
+    if header == "row":
+        widths: list = get_table_widths(data)
+        header: list = data.pop(0)
+        print_header(header, widths)
+        print_separator(widths)
+        print_data(data, widths)
+        pass
+    else:
+        pass
     return None

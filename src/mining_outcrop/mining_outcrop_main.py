@@ -71,11 +71,6 @@ def add_excel_data_to_json(path_to_excel_file: str,
                                            '%Y-%m-%d')
     shutil.copyfile(path_to_excel_file, path_to_copied_excel_file)
     workbook = openpyxl.load_workbook(path_to_copied_excel_file)
-
-    nations: list = [
-        "Mondstadt", "Liyue", "Inazuma", "Sumeru", "Fontaine",
-        # "Natlan", "Snezhnaya"
-    ]
     for nation in NATIONS:
         moh.add_excel_data_to_json_helper(prev_date, workbook, nation,
                                           json_data)
@@ -115,15 +110,34 @@ def ley_line_occurrences_analysis(nation: str, json_data: dict,
 def ley_line_mining_locations_probabilities(nation: str,
                                             json_data: dict) -> None:
     moh.print_header("Ley Line Mining Location Analysis")
-    data_to_print: list = []
-    for (ley_line, entries) in json_data[nation]["data"].items():
+    sorted_dict: dict = dict(sorted(json_data[nation]["data"].items()))
+    for (ley_line, entries) in sorted_dict.items():
+        n: int = len(entries)
         wealth, revelation = ley_line.split(" | ")
-        data_to_print.append([wealth, revelation, entries])
-        pass
-    ms.merge_sort_asc(data_to_print, 1)
-    ms.merge_sort_asc(data_to_print, 0)
-    for lst in data_to_print:
-        print(f"• {lst[0]} | {lst[1]}")
+        print(f"• {wealth} | {revelation}: {n}")
+        locs_p: dict = {}
+        for entry in entries:
+            for lst in entry.values():
+                for e in lst:
+                    if int(e) not in locs_p:
+                        locs_p[int(e)] = 1
+                        pass
+                    else:
+                        locs_p[int(e)] += 1
+                        pass
+                    pass
+                pass
+            pass
+        sorted_dict: dict = dict(sorted(locs_p.items()))
+        data_to_print: list = [["Location"], ["Probability"]]
+        for (k, v) in sorted_dict.items():
+            data_to_print[0].append(str(k))
+            data_to_print[1].append(f"{v / n:.2%}")
+            sorted_dict[k] = f"{v / n:.2%}"
+            pass
+        # print(sorted_dict)
+        tf.print_data_as_table(data_to_print)
+        print()
         pass
     return None
 

@@ -250,7 +250,9 @@ def web_scraper_weapon(url: str) -> dict:
             data: str = div_i_2.get_text()
             # Get Max Base ATK
             if i == 0:
-                weapon["Base ATK"] = int(data.split(" - ")[-1])
+                if data != "Unknown":
+                    weapon["Base ATK"] = int(data.split(" - ")[-1])
+                    pass
                 pass
             # Get Sub Stat
             elif i == 1:

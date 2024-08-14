@@ -81,16 +81,22 @@ class ArtifactPiece:
     def num_rolls_safety_check(self, possible_num_rolls: list,
                                valid_num_rolls: list) -> None:
         if len(valid_num_rolls) != 1:
-            print(f"Number of rolls conflict.\n"
-                  f"Possible: {possible_num_rolls}"
-                  f"Valid: {valid_num_rolls}")
-            sys.exit(0)
-            pass
-        else:
-            for (i, sub_stat) in enumerate(self.get_sub_stats()):
-                num_rolls: int = valid_num_rolls[0][i]
-                self.get_sub_stat_rolls_dict()[sub_stat] = num_rolls
+            temp: list = []
+            for valid_num_roll in valid_num_rolls:
+                if sum(valid_num_roll) in possible_num_rolls:
+                    temp.append(valid_num_roll)
                 pass
+            if not temp:
+                print(f"Number of rolls conflict.\n"
+                      f"Possible: {possible_num_rolls}\n"
+                      f"Valid: {valid_num_rolls}")
+                sys.exit(0)
+                pass
+            valid_num_rolls = temp
+            pass
+        for (i, sub_stat) in enumerate(self.get_sub_stats()):
+            num_rolls: int = valid_num_rolls[0][i]
+            self.get_sub_stat_rolls_dict()[sub_stat] = num_rolls
             pass
         return None
 
@@ -296,19 +302,19 @@ def get_rating_p(grade_counters: dict) -> dict:
 
 
 def test() -> None:
-    with open("assets/data/sub_stats.json", "r") as file:
+    with open("../assets/data/sub_stats.json", "r") as file:
         json_data: dict = json.load(file)
         pass
 
     HP, ATK, DEF, HPp, ATKp, DEFp, EM, ER, CR, CD = list(json_data.keys())
 
-    level: int = 15
+    level: int = 20
 
     sub_stat_dict: dict[str, float] = {
-        ER: 11.0,
-        EM: 21,
-        CR: 2.7,
-        ATK: 29
+        CR: 14.0,
+        CD: 6.2,
+        ER: 9.7,
+        HP: 239
     }
 
     artifact_piece: ArtifactPiece = ArtifactPiece(level, sub_stat_dict)

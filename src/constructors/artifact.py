@@ -30,26 +30,26 @@ class ArtifactPiece:
     def get_level(self) -> int:
         return self.level
 
-    def get_sub_stats(self) -> list[str]:
-        return list(self.ssv_dict.keys())
-
-    def get_sub_stat_values(self) -> list[float | int]:
-        return list(self.ssv_dict.values())
-
     def get_sub_stat_values_dict(self) -> dict:
         return self.ssv_dict
 
-    def get_roll_values(self) -> list[float]:
-        return list(self.rv_dict.values())
+    def get_sub_stats(self) -> list[str]:
+        return list(self.get_sub_stat_values_dict().keys())
+
+    def get_sub_stat_values(self) -> list[float | int]:
+        return list(self.get_sub_stat_values_dict().values())
 
     def get_roll_values_dict(self) -> dict:
         return self.rv_dict
 
-    def get_sub_stat_rolls(self) -> list[int]:
-        return list(self.ssr_dict.values())
+    def get_roll_values(self) -> list[float]:
+        return list(self.get_roll_values_dict().values())
 
     def get_sub_stat_rolls_dict(self) -> dict:
         return self.ssr_dict
+
+    def get_sub_stat_rolls(self) -> list[int]:
+        return list(self.get_sub_stat_rolls_dict().values())
 
     def convert_ssv_to_rv(self, json_data: dict) -> None:
         for sub_stat in self.ssv_dict:

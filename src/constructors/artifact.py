@@ -225,33 +225,40 @@ def roll_ratings(num_sub_stats: int) -> dict:
         "S+": [], "S": [], "A": [], "B": [], "C": [], "D": [], "F": []
     }
     if num_sub_stats == 1:
-        ratings["S+"] = [6.0, 6.0]  # 1.67%
-        ratings["S"] = [4.9, 5.9]  # 16.67%
-        ratings["A"] = [3.9, 4.8]  # 15.00%
-        ratings["B"] = [3.0, 3.8]  # 13.33%
-        ratings["C"] = [2.1, 2.9]  # 13.33%
-        ratings["D"] = [1.4, 2.0]  # 10.00%
-        ratings["F"] = [0.0, 1.0]  # 16.67% (23.33%)
+        ratings["S+"] = [6.0, 6.0]  # 1.89%
+        ratings["S"] = [4.9, 5.9]  # 18.87%
+        ratings["A"] = [3.9, 4.8]  # 16.98%
+        ratings["B"] = [3.0, 3.8]  # 15.09%
+        ratings["C"] = [2.1, 2.9]  # 15.09%
+        ratings["D"] = [1.4, 2.0]  # 11.32%
+        ratings["F"] = [0.7, 1.0]  # 5.66%
         pass
     elif num_sub_stats == 2:
-        ratings["S+"] = [7.0, 7.0]  # 1.43%
-        ratings["S"] = [5.8, 6.9]  # 15.71%
-        ratings["A"] = [4.7, 5.7]  # 14.29%
-        ratings["B"] = [3.8, 4.6]  # 11.43%
-        ratings["C"] = [2.9, 3.7]  # 11.43%
-        ratings["D"] = [2.1, 2.8]  # 10.00%
-        ratings["F"] = [0.0, 2.0]  # 28.57%
+        ratings["S+"] = [7.0, 7.0]  # 1.79%
+        ratings["S"] = [5.8, 6.9]  # 19.64%
+        ratings["A"] = [4.7, 5.7]  # 17.86%
+        ratings["B"] = [3.8, 4.6]  # 14.29%
+        ratings["C"] = [2.9, 3.7]  # 14.29%
+        ratings["D"] = [2.1, 2.8]  # 12.50%
+        ratings["F"] = [1.4, 2.0]  # 10.71%
         pass
     elif num_sub_stats == 3:
-        ratings["S+"] = [8.0, 8.0]  # 1.25%
-        ratings["S"] = [6.7, 7.9]  # 15.00%
-        ratings["A"] = [5.6, 6.6]  # 12.50%
-        ratings["B"] = [4.6, 5.5]  # 11.25%
-        ratings["C"] = [3.7, 4.5]  # 10.00%
-        ratings["D"] = [2.9, 3.6]  # 8.75%
-        ratings["F"] = [0.0, 2.8]  # 35.00%
+        ratings["S+"] = [8.0, 8.0]  # 1.69%
+        ratings["S"] = [6.7, 7.9]  # 20.34%
+        ratings["A"] = [5.6, 6.6]  # 16.95%
+        ratings["B"] = [4.6, 5.5]  # 15.25%
+        ratings["C"] = [3.7, 4.5]  # 13.56%
+        ratings["D"] = [2.9, 3.6]  # 11.86%
+        ratings["F"] = [2.1, 2.8]  # 11.86%
         pass
     else:
+        # ratings["S+"] = [9.0, 9.0]  # 1.61%
+        # ratings["S"] = [7.6, 8.9]  # 20.97%
+        # ratings["A"] = [6.5, 7.5]  # 16.13%
+        # ratings["B"] = [5.5, 6.4]  # 14.52%
+        # ratings["C"] = [4.6, 5.4]  # 12.90%
+        # ratings["D"] = [3.8, 4.5]  # 11.29%
+        # ratings["F"] = [2.8, 3.7]  # 14.52%
         pass
     return ratings
 

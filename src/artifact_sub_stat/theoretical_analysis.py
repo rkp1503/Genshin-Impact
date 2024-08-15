@@ -19,21 +19,25 @@ def get_data_set(num_sub_stats: int) -> list[list[float]]:
             [a] for a in RVS
             if (a > 0)
         ]
+        pass
     elif num_sub_stats == 2:
         data_set = [
             [a, b] for a in RVS for b in RVS
             if (a > 0) and (b > 0)
         ]
+        pass
     elif num_sub_stats == 3:
         data_set = [
             [a, b, c] for a in RVS for b in RVS for c in RVS
             if (a > 0) and (b > 0) and (c > 0)
         ]
+        pass
     elif num_sub_stats == 4:
         data_set = [
             [a, b, c, d] for a in RVS for b in RVS for c in RVS for d in RVS
             if (a > 0) and (b > 0) and (c > 0) and (d > 0)
         ]
+        pass
     return data_set
 
 
@@ -128,6 +132,6 @@ def main(num_sub_stats: int) -> None:
 
 
 if __name__ == '__main__':
-    num_sub_stats: int = 1
+    num_sub_stats: int = 3
     main(num_sub_stats)
     pass
